@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 5050;
 
 // init DB
-// dbConnect();
+dbConnect();
 
 //Middleware
 app.use(express.json());

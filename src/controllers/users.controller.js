@@ -11,9 +11,11 @@ const IUserRequest = {
 const register = async (req, res) => {
   const userRequest = req.body;
   // check if a user already exist with the email
-  if (await userService.userExist(userRequest.email)) {
+  const exist = await userService.userExist(userRequest.email);
+  if (!exist) {
     //create
-    const newUser = await userService.create(userRequest);
+
+    const newUser = await userService.create({ ...userRequest, role: "USER" });
     res.status(200).json(newUser);
   } else {
     res.status(400).json({ message: "User already exist" });
