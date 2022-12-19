@@ -39,4 +39,28 @@ const registerValidator = (req, res, next) => {
   next();
 };
 
-export { registerValidator };
+const loginValidator = (req, res, next) => {
+  const loginDetails = req.body;
+  const schema = Joi.object({
+    password: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")) // don't use this
+      .required(),
+    email: Joi.string()
+      .email({
+        minDomainSegments: 2,
+        // tlds: { allow: ["com", "net"] },
+      })
+      .required(),
+  });
+
+  const result = schema.validate(loginDetails);
+  // console.log("result", result);
+  if (result.error) {
+    res.status(400).json({ errors: result.error });
+    return;
+  }
+
+  next();
+};
+
+export { registerValidator, loginValidator };
