@@ -1,3 +1,5 @@
+import Joi from "joi";
+
 const createPostValidator = (req, res, next) => {
   // image
   // topic
